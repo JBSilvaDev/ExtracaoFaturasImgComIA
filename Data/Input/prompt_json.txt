@@ -1,0 +1,23 @@
+﻿sua tarefa é extrair dados em texto de uma nota fiscal. 
+ 
+Preciso que extraia os seguintes dados:
+ 
+Invoice No: <INT numero da invoice> extraia apenas numeros
+Date: <data da emissão no formato brasileiro DD/MM/YYYY>
+Vendor: <STR nome Do forncedor> este texto não é separado por vígula
+Subtotal: <FLOAT palavra chave subtotal, extraia apenas numeros>
+Tax: <FLOAT imposto, extraia apenas numeros>
+Total: <FLOAT total, extraia apenas numeros>  
+ 
+Gere o resultado no formato json e sem crases e sem textos extras apenas o json. O conteúdo do json deve ser adicionado dentro de cochetes. Exemplo:
+
+[
+    {
+        "Invoice No": 1726,
+        "Date": "21/09/2022",
+        "Vendor": "ADATUM CORPORATION",
+        "Subtotal": 147.29,
+        "Tax": 2.96,
+        "Total": 150.25
+    }
+]

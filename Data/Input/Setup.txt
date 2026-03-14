@@ -1,0 +1,65 @@
+Fazer login no aiStutio
+https://aistudio.google.com/
+
+Documentação
+https://ai.google.dev/gemini-api/docs?hl=pt-br#rest
+
+Base64 Decode and Encode - Online Tool
+https://www.base64decode.net/
+
+
+Dados preechidos no HTTP request:
+Request method: POST
+Request URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent"
+Headers: "x-goog-api-key" - "SUA_CHAVE_API"  & "Content-Type" - "application/json"
+Request body type: Text
+Text content byte: "application/json"
+
+O Modelo pede a seguinte informação para envio de requisição:
+{
+  'contents': [
+    {
+      parts: [
+        {
+          inlineData: {
+            mimeType: 'image/jpeg',
+            data: <Aqui enviar base64 da imagem>
+          }
+        },
+        { text: <Aqui enviar o prompt contido no arquivo "prompt_json.txt"> }
+      ]
+    }
+  ]
+}
+
+Para passar os dados conforme acima, em VB precisamos usar o seguinte metodo numa variavel Dictionary(Of String, Object)
+
+New Dictionary(Of String, Object) From {
+    {"contents", New List(Of Object) From {
+        New Dictionary(Of String, Object) From {
+            {"parts", New List(Of Object) From {
+                New Dictionary(Of String, Object) From {
+                    {"inlineData", New Dictionary(Of String, Object) From {
+                        {"mimeType", "image/jpeg"}, 
+                        {"data", Base64String}
+                        }
+                    }
+                },
+                New Dictionary(Of String, Object) From {
+                    {"text", InputPrompt}
+                }
+            }
+            }
+        }
+    }
+    }
+}
+
+
+Criar arquivo xlsx com as seguintes colunas
+Invoice No	 
+Date	 
+Vendor	 
+Subtotal	 
+Tax	 
+Total
