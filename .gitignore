@@ -1,0 +1,49 @@
+# Ignore project settings
+.project
+.settings/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore UiPath specific files
+*.local
+*.objects
+*.testresults
+*.log
+*.logs
+*.nupkg
+*.cache
+
+*.manifest.json
+
+# Ignore publish-related files
+*.publishsettings
+*.deployment
+
+# Ignore temporary folders
+.entities/
+.local/
+.objects/
+.project/
+.settings/
+.templates/
+.tmh/
+.storage/
+
+# Ignore temporary files
+*.tmp
+*.temp
+~$*
+
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+env.txt
+
+# Ignore node_modules (if applicable)
+node_modules/
+
+# Ignore output folders
+Data/ScreeshotsErros/*
