@@ -105,7 +105,7 @@
       <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="1218,1094" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="1218,1271" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="InputPrompt" />
     </Sequence.Variables>
@@ -117,15 +117,16 @@
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="450,173" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
     <ui:ReadTextFile File="{x:Null}" Content="[InputPrompt]" DisplayName="Read Text File" FileName="[Environment.CurrentDirectory + &quot;\Data\Input\prompt_json.txt&quot;]" sap:VirtualizedContainerService.HintSize="450,112" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[in_dt_TransactionData]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="450,714" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[in_dt_TransactionData]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="450,778" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
       <ui:ForEachRow.Body>
         <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="416,527" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="416,582" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:String" Name="Base64String" />
+              <Variable x:TypeArguments="x:String" Name="RespostaJson" />
             </Sequence.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -141,7 +142,7 @@
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="RequestAPI - Invoke Workflow File (Framework\ProcessBox\RequestAPI.xaml)" sap:VirtualizedContainerService.HintSize="382,177" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\ProcessBox\RequestAPI.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InArgument x:TypeArguments="x:String" x:Key="in_Modelo">gemini-3-flash-preview</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="out_RespostaJson" />
+                <InArgument x:TypeArguments="x:String" x:Key="out_RespostaJson">[RespostaJson]</InArgument>
                 <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Body" xml:space="preserve">[New Dictionary(Of String, Object) From {
     {"contents", New List(Of Object) From {
         New Dictionary(Of String, Object) From {
@@ -163,10 +164,15 @@
 }]</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
-            <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="382,113" sap2010:WorkflowViewState.IdRef="WriteLine_1" />
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ConvetDtExcel - Invoke Workflow File (Framework\ProcessBox\ConvetDtExcel.xaml)" sap:VirtualizedContainerService.HintSize="382,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\ProcessBox\ConvetDtExcel.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <scg:Dictionary x:TypeArguments="x:String, Argument" />
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
           </Sequence>
         </ActivityAction>
       </ui:ForEachRow.Body>
     </ui:ForEachRow>
+    <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="450,113" sap2010:WorkflowViewState.IdRef="WriteLine_1" />
   </Sequence>
 </Activity>
